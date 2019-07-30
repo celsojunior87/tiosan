@@ -19,7 +19,6 @@ import money from 'v-money'
 import VuetifyNumberInput from '@jzolago/vuetify-number-input'
 import currency from 'v-currency-field'
 import Loading from 'vue-loading-overlay';
-import VFileInput from 'v-file-input'
 
 
 import '~/plugins'
@@ -36,7 +35,6 @@ window.loading = loading
 window._has = require('lodash/has')
 window.Vue = Vue;
 
-Vue.use(VFileInput)
 
 Vue.use(Toasted, {
   position: 'top-right',

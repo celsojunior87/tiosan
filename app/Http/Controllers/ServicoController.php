@@ -2,23 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\TipoServicoRequest;
-use App\Models\TipoServico;
-use App\Repositories\TipoServicoRespository;
+use App\Http\Requests\ServicoRequest;
+use App\Models\Servico;
+use App\Repositories\ServicoRepository;
 use Illuminate\Http\Request;
 
-class TipoServicoController extends Controller
+class ServicoController extends Controller
 {
     protected $repository;
-    protected $tipoServico;
+    protected $servico;
 
-    public function __construct(TipoServicoRespository $tipoServicoRepository, TipoServico $model)
+    public function __construct(ServicoRepository $servicoRepository, Servico $model)
     {
-        $this->repository = $tipoServicoRepository;
-        $this->tipoServico = $model;
+        $this->repository = $servicoRepository;
+        $this->servico = $model;
     }
-
-
     /**
      * Display a listing of the resource.
      *
@@ -36,10 +34,12 @@ class TipoServicoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TipoServicoRequest $request)
+    public function store(ServicoRequest $request)
     {
-        $tipoServico = $this->tipoServico->create($request->all());
-        return response()->json($tipoServico);
+        $tt = $request->all();
+        dd($tt);
+        $servico = $this->servico->create($request->all());
+        return response()->json($servico);
     }
 
     /**
@@ -50,8 +50,8 @@ class TipoServicoController extends Controller
      */
     public function show($id)
     {
-        $tipoServico = $this->tipoServico->find($id);
-        return response()->json($tipoServico);
+        $servico = $this->servico->find($id);
+        return response()->json($servico);
     }
 
 
@@ -62,15 +62,15 @@ class TipoServicoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(TipoServicoRequest $request, $id)
+    public function update(ServicoRequest $request, $id)
     {
-        if(!$tipoServico = $this->tipoServico->find($id))
+
+        if(!$servico = $this->servico->find($id))
             return response()->json('error','Not Found');
 
-        $tipoServico->update($request->all());
+        $servico->update($request->all());
 
         return response()->json(['success']);
-
     }
 
     /**
@@ -81,8 +81,8 @@ class TipoServicoController extends Controller
      */
     public function destroy($id)
     {
-        $tipoServico = $this->repository->findOrFail($id);
-        $this->repository->delete($tipoServico, $id);
+        $servico = $this->repository->findOrFail($id);
+        $this->repository->delete($servico, $id);
         return $this->success(['msg' => 'Excluído']);
     }
 }

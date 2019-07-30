@@ -24,7 +24,7 @@ class VeiculoRepository
 
     public function buscarVeiculoporPlaca($placa)
     {
-        return $this->veiculo->with(['cliente'])->where('placa','=',$placa)->first();
+        return $this->veiculo->with(['cliente'])->where('placa', '=',$placa)->first();
 
     }
     public function getAll()

@@ -13,7 +13,7 @@
                                 <show-error :form-name="formCliente" prop-name="nome"></show-error>
                             </v-flex>
                             <v-flex xs4>
-                                <v-text-field label="Telefone" v-model="formCliente.telefone"
+                                <v-text-field label="Telefone" v-model="formCliente.telefone" mask=" (##) #####-####"
                                               required></v-text-field>
                             </v-flex>
                             <v-flex xs4>
@@ -244,8 +244,5 @@
         mounted() {
             this.getCliente()
         },
-
-
-
     }
 </script>

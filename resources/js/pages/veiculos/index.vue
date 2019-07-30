@@ -21,7 +21,7 @@
                                 <show-error :form-name="formVeiculo" prop-name="id_tipo_veiculo"></show-error>
                             </v-flex>
                             <v-flex xs5>
-                                <v-select
+                                <v-autocomplete
                                         v-if="cliente"
                                         v-bind:items="cliente"
                                         label="Cliente"
@@ -29,7 +29,7 @@
                                         item-value="id"
                                         v-model="formVeiculo.id_cliente"
                                         name="id_cliente"
-                                ></v-select>
+                                ></v-autocomplete>
                                 <show-error :form-name="formVeiculo" prop-name="id_cliente"></show-error>
                             </v-flex>
                             <v-flex xs5>
@@ -45,11 +45,11 @@
                                 <show-error :form-name="formVeiculo" prop-name="cor"></show-error>
                             </v-flex>
                             <v-flex xs5>
-                                <v-text-field label="Ano" v-model="formVeiculo.ano" name="ano" required></v-text-field>
+                                <v-text-field label="Ano" v-model="formVeiculo.ano" name="ano" mask=" ####" required></v-text-field>
                                 <show-error :form-name="formVeiculo" prop-name="ano"></show-error>
                             </v-flex>
                             <v-flex xs5>
-                                <v-text-field label="Placa" v-model="formVeiculo.placa" name="placa" required></v-text-field>
+                                <v-text-field label="Placa" v-model="formVeiculo.placa" name="placa"  required></v-text-field>
                                 <show-error :form-name="formVeiculo" prop-name="placa"></show-error>
                             </v-flex>
                         </v-layout>

@@ -8,28 +8,138 @@
                 <v-card-text>
                     <v-container grid-list-md>
                         <v-layout wrap>
-                            <v-flex xs3>
-                                <v-text-field label="Placa" v-on:change="buscarPorPlaca" v-model="formServico.placa" name="tipo_servico" required ></v-text-field>
+                            <v-flex xs4>
+                                <v-text-field label="Placa" v-model="formServico.placa"
+                                              v-on:change="buscarPorPlaca" name="placa" required ></v-text-field>
                                 <show-error :form-name="formServico" prop-name="placa"></show-error>
                             </v-flex>
-                            <v-flex xs3>
-                                <v-text-field label="Cliente" v-model="formServico.nome" name="cliente" required ></v-text-field>
-                                <show-error :form-name="formServico" prop-name="cliente"></show-error>
+                            <v-flex xs8>
+                                <v-text-field label="Cliente" v-model="formServico.nome"
+                                                   required></v-text-field>
+                                <show-error :form-name="formServico" ></show-error>
                             </v-flex>
-                            <v-flex xs3>
-                                <v-text-field label="Modelo" v-model="formServico.modelo" name="modelo" required ></v-text-field>
-                                <show-error :form-name="formServico" prop-name="modelo"></show-error>
+                            <v-flex xs4>
+                                <v-text-field label="Modelo" v-model="formServico.modelo"
+                                              required></v-text-field>
                             </v-flex>
+                            <v-flex xs8>
+                                <v-select
+                                        v-if="tipoServico"
+                                        v-bind:items="tipoServico"
+                                        label="Tipo de Serviço"
+                                        item-text="tipo_servico"
+                                        item-value="id"
+                                        v-model="formServico.id_tipo_servico"
+                                        name="id_tipo_servico"
+                                ></v-select>
+                                <show-error :form-name="formServico" prop-name="id_tipo_servico"></show-error>
+                            </v-flex>
+                            <v-flex xs4>
+                                <v-dialog
+                                        ref="dialog"
+                                        v-model="dialogDate"
+                                        lazy
+                                        full-width
+                                        width="290px"
+                                >
+                                    <template v-slot:activator="{ on }">
+                                        <v-text-field
+                                                v-model="computedDateFormatted"
+                                                label="Data do Serviço"
+                                                prepend-icon="event"
+                                                readonly
+                                                v-on="on"
+                                                name="data_servico"
+                                        ></v-text-field>
+                                    </template>
+                                    <v-date-picker
+                                            v-model="formServico.data_servico"
+                                            scrollable
+                                            locale="ptbr"
+                                            :max="new Date().toISOString().substr(0, 10)"
+                                    >
+                                        <v-spacer></v-spacer>
+                                        <v-btn flat color="primary" @click="dialogDate = false">Cancel</v-btn>
+                                        <v-btn flat color="primary" @click="dialogDate = false">OK</v-btn>
+                                    </v-date-picker>
+                                </v-dialog>
+                            </v-flex>
+                            <v-flex xs4>
+                                <v-text-field label="Hora da Entrada" v-model="formServico.hora_entrada"
+                                              mask=" ##:##"  required></v-text-field>
+                            </v-flex>
+                            <v-flex xs4>
+                                <v-text-field label="Hora de Saida" v-model="formServico.hora_saida"
+                                              mask=" ##:##"   required></v-text-field>
+                            </v-flex>
+                            <v-flex xs4>
+                                <v-select
+                                        v-if="tipoPagamento"
+                                        v-bind:items="tipoPagamento"
+                                        label="Tipo de Pagamento"
+                                        item-text="text"
+                                        item-value="value"
+                                        v-model="formServico.tipo_pagamento"
+                                        name="tipo_pagamento"
+                                ></v-select>
+                                <show-error :form-name="formServico" prop-name="tipo_pagamento"></show-error>
+                            </v-flex>
+                            <v-flex xs4>
+                                <v-select
+                                        v-if="categoriaServico"
+                                        v-bind:items="categoriaServico"
+                                        label="Tipo de Categoria"
+                                        item-text="text"
+                                        item-value="value"
+                                        v-model="formServico.categoria"
+                                        name="categoria"
+                                ></v-select>
+                                <show-error :form-name="formServico" prop-name="categoria"></show-error>
+                            </v-flex>
+                            <v-flex xs4>
+                                <v-currency-field label="Preço" v-bind="currency_config"
+                                                  v-model="formServico.preco"></v-currency-field>
+                                <show-error :form-name="formServico" prop-name="preco"></show-error>
+                            </v-flex>
+                            <v-flex xs4>
+                                <v-currency-field label="Preço Adicional" v-bind="currency_config" v-if="enabled"
+                                                  v-model="formServico.preco_adicional"></v-currency-field>
+                                <show-error :form-name="formServico" prop-name="preco_adicional"></show-error>
+                            </v-flex>
+                        </v-layout >
+                        <v-layout>
+                            <v-layout align-center>
+                                <v-checkbox
+                                        v-model="enabled"
+                                        hide-details
+                                        class="shrink mr-2 mt-0"
+                                ></v-checkbox>
+                                <v-text-field
+                                        :disabled="!enabled"
+                                        label="Possui Serviço Adicionais?"
+                                ></v-text-field>
+                            </v-layout>
+                        </v-layout>
+                        <v-layout>
+                            <v-layout align-center>
+                                <v-checkbox
+                                        v-model="enabledAvaria"
+                                        hide-details
+                                        class="shrink mr-2 mt-0"
+                                ></v-checkbox>
+                                <v-text-field
+                                        :disabled="!enabledAvaria"
+                                        label="O Veiculo Possui Avarias?"
+                                ></v-text-field>
+                            </v-layout>
                         </v-layout>
                         <v-layout align-center>
+                            <v-flex xs6>
+                                <v-text-field v-model="formServico.image" v-if="enabledAvaria" type="file" label="Fotos" multiple>
+
+                                </v-text-field>
+                            </v-flex>
                         </v-layout>
-                        <!--<v-file-input-->
-                                <!--:rules="rules"-->
-                                <!--accept="image/png, image/jpeg, image/bmp"-->
-                                <!--placeholder="Pick an avatar"-->
-                                <!--prepend-icon="mdi-camera"-->
-                                <!--label="Avatar"-->
-                        <!--&gt;</v-file-input>-->
                     </v-container>
                 </v-card-text>
                 <v-card-actions>
@@ -44,7 +154,7 @@
                 <v-btn fab dark color="red" @click="novo">
                     <v-icon dark>add</v-icon>
                 </v-btn>
-                 Serviços
+                Serviços
                 <v-spacer></v-spacer>
                 <v-text-field
                         v-model="search"
@@ -56,17 +166,15 @@
             </v-card-title>
             <v-data-table
                     :headers="headers"
-                    :items="tipoServico"
+                    :items="cliente"
                     :search="search"
                     rows-per-page-text="por página"
                     no-results-text="Nenhum registro encontrado"
                     :rows-per-page-items="rowsPerPageItems"
             >
                 <template v-slot:items="props">
-                    <td class="text-xs-left">{{ props.item.tipo_servico }}</td>
-                    <td class="text-xs-left">{{ props.item.cliente }}</td>
-                    <td class="text-xs-left">{{ props.item.veiculo }}</td>
-                    <td class="text-xs-left">{{ props.item.veiculo }}</td>
+                    <td class="text-xs-left">{{ props.item.nome }}</td>
+                    <td class="text-xs-left">{{ props.item.email }}</td>
 
                     <td class="text-xs-center">
                         <v-btn small color="blue" @click="editar(props.item.id)">
@@ -94,29 +202,53 @@
 <script>
     import Field from '../../components/Field'
     import {mask} from 'vue-the-mask'
+    import moment from 'moment'
+    import {VMoney} from 'v-money'
 
     export default {
         components: {Field},
-        directives: {mask},
+        directives: {mask, moment, VMoney},
         name: "index",
-        data: () => ({
-            rules: [
-                value => (value[0] || {}).size < 2000000 || 'Avatar size should be less than 2 MB!',
-            ],
-            includeFiles: true,
-            enabled: false,
+        data: vm => ({
+            currency_config: {
+                decimal: ',',
+                thousands: '.',
+                prefix: 'R$ ',
+                suffix: '',
+                precision: 2,
+                masked: false,
+                allowBlank: false,
+                min: Number.MIN_SAFE_INTEGER,
+                max: Number.MAX_SAFE_INTEGER
+            },
             masked: true,
             rowsPerPageItems: [10,25,{"text":"","value":10}],
             dialog: false,
+            dialogDate: false,
+            enabled: false,
+            enabledAvaria:false,
             search: '',
-            servico:[],
-            tipoServico: [],
-            cliente:[],
+            cliente: [],
+            tipoPagamento:[
+                {text: 'Dinheiro', value: 'D'},
+                {text: 'Cartão de Debito', value: 'CD'},
+                {text: 'Cartão de Credito', value: 'CC'},
+            ],
+            categoriaServico:[
+                {text: 'Particular', value: 'P'},
+                {text: 'Uber', value: 'U'},
+                {text: 'Empresa', value: 'E'},
+            ],
+            servico: [],
+            tipoServico:[],
+            veiculo:[],
+            date: new Date().toISOString().substr(0, 10),
+            dateFormatted: moment(moment).format('DD/MM/YYYY'),
+
             headers: [
-                {text: 'Tipo de Serviço', value: 'tipo_servico'},
-                {text: 'Veiculo', value: 'tipo_servico'},
-                {text: 'Cliente', value: 'Cliente'},
-                {text: 'Data do Serviço', value: 'Cliente'},
+                {text: 'Nome', value: 'nome'},
+                {text: 'Email', value: 'email'},
+                {text: 'Telefone', value: 'email'},
                 {text: 'Ações', value: '', align: 'center'},
             ],
             formServico: new Form({
@@ -124,42 +256,72 @@
                 placa: '',
                 nome: '',
                 modelo:'',
+                id_cliente:'',
+                id_veiculo:'',
+                id_tipo_servico:'',
+                hora_entrada:'',
+                data_servico:'',
+                data_saida:'',
+                preco_adicional:'',
+                tipo_pagamento:'',
+                obs_adicionais:'',
+                obs_avarias:'',
+                categoria:'',
+                preco:'',
+                image:'',
             })
         }),
         methods: {
-            buscarPorPlaca(){
 
+            buscarPorPlaca(){
                 loading.show();
                 axios
                     .get('/api/veiculo/buscar-cliente-por-placa/'+ this.formServico.placa)
                     .then((res) => {
                         this.formServico.modelo = res.data.modelo
                         this.formServico.nome = res.data.cliente.nome
+                        this.formServico.id_cliente = res.data.cliente.id_cliente
+                        this.formServico.id = res.data.cliente.id
                     })
                     .finally(() => {
                         loading.hide()
                     })
-
             },
 
-            getTipoServico() {
+            getServico() {
                 loading.show();
+                axios
+                    .get('/api/servico')
+                    .then((res) => {
+                        this.servico = res.data;
+                    })
+                    .finally(() => {
+                        loading.hide()
+                    })
+            },
+            getTipoServico() {
                 axios
                     .get('/api/tipo-servico')
                     .then((res) => {
                         this.tipoServico = res.data;
                     })
-                    .finally(() => {
-                        loading.hide()
+            },
+            getCliente() {
+                axios
+                    .get('/api/cliente')
+                    .then((res) => {
+                        this.cliente = res.data;
                     })
             },
+
+
             novo() {
                 this.resetForm()
                 this.dialog = true
             },
             editar(id) {
                 axios
-                    .get('/api/tipo-servico/'+id)
+                    .get('/api/servico/'+id)
                     .then((res) => {
                         this.formServico = res.data
                         this.dialog = true
@@ -178,7 +340,7 @@
                 }).then((result) => {
                     if (result.value) {
                         axios
-                            .delete('/api/tipo-servico/' + id)
+                            .delete('/api/servico/' + id)
                             .then((response) => {
                                 if (response.data.status == 'success') {
                                     this.$swal.fire(
@@ -186,10 +348,10 @@
                                         '',
                                         'success'
                                     )
-                                    this.getTipoServico();
+                                    this.getServico();
                                 } else {
                                     this.$swal.fire(
-                                        'Tipo de Serviço não foi excluído',
+                                        'Serviço não foi excluído',
                                         '',
                                         'error'
                                     )
@@ -201,24 +363,24 @@
             salvar() {
                 loading.show();
                 if(this.formServico.id) {
-                    axios.put('/api/tipo-servico/'+this.formServico.id, this.formServico)
+                    axios.put('/api/servico/'+this.formServico.id, this.formServico)
                         .then((response) => {
                             this.dialog = false
                             loading.hide();
                             this.$toasted.success(response.data.msg)
-                            this.getTipoServico();
+                            this.getServico();
                         })
                         .catch((error) => {
                             loading.hide();
                             this.$toasted.error(error.msg)
                         })
                 } else {
-                    this.formServico.post('/api/tipo-servico')
+                    this.formServico.post('/api/servico')
                         .then((response) => {
                             this.dialog = false
                             loading.hide();
                             this.$toasted.success(response.msg)
-                            this.getTipoServico();
+                            this.getServico();
                         })
                         .catch((error) => {
                             loading.hide();
@@ -232,14 +394,50 @@
                     placa: '',
                     nome: '',
                     modelo:'',
+                    id_cliente:'',
+                    id_veiculo:'',
+                    id_tipo_servico:'',
+                    categoria:'',
+                    data_servico: new Date().toISOString().substr(0, 10),
+                    hora_entrada:'',
+                    hora_saida:'',
+                    tipo_pagamento:'',
+                    obs_adicionais:'',
+                    obs_avarias:'',
                 })
-            }
+            },
+            formatDate (date) {
+
+                if (!date) return null
+
+                const [year, month, day] = date.split('-')
+
+                return `${day}/${month}/${year}`
+            },
+            parseDate (date) {
+                if (!date) return null
+
+                const [month, day, year] = date.split('/')
+                return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+            },
         },
         mounted() {
+            this.getCliente()
+            this.getServico()
             this.getTipoServico()
         },
-
-
-
+        computed: {
+            computedDateFormatted () {
+                return this.formatDate(this.formServico.data_servico)
+            },
+        },
+        watch: {
+            formServico: {
+                handler: function() {
+                    this.dateFormatted = this.formatDate(this.formServico.data_servico)
+                },
+                deep: true
+            }
+        },
     }
 </script>
