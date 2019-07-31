@@ -17,7 +17,6 @@ class CreateServicosTable extends Migration
         Schema::create('servicos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('preco');
-            $table->boolean('adicionais')->nullable();
             $table->string('preco_adc')->nullable();
             $table->date('data_servico');
             $table->time('hora_entrada');

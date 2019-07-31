@@ -5,16 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ServicoRequest;
 use App\Models\Servico;
 use App\Repositories\ServicoRepository;
-use Illuminate\Http\Request;
 
 class ServicoController extends Controller
 {
     protected $repository;
     protected $servico;
 
-    public function __construct(ServicoRepository $servicoRepository, Servico $model)
+    public function __construct(ServicoRepository $repository, Servico $model)
     {
-        $this->repository = $servicoRepository;
+        $this->repository = $repository;
         $this->servico = $model;
     }
     /**
@@ -36,10 +35,9 @@ class ServicoController extends Controller
      */
     public function store(ServicoRequest $request)
     {
-        $tt = $request->all();
-        dd($tt);
-        $servico = $this->servico->create($request->all());
-        return response()->json($servico);
+        $this->repository->create($request->all());
+        return $this->success(['msg' => 'Salvo com sucesso']);
+
     }
 
     /**

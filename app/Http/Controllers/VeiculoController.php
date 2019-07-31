@@ -85,6 +85,9 @@ class VeiculoController extends Controller
     {
        $veiculo = $this->repository->buscarVeiculoporPlaca($placa);
 
+       if(!$veiculo)
+           return $this->error(['msg'=>'Não Existe Esse Cliente, Por favor Cadastre novamente o cliente ou 
+           o Veiculo']);
        return response()->json($veiculo);
 
     }

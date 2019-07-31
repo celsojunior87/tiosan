@@ -77,7 +77,7 @@
                     <td class="text-xs-left">{{ props.item.nome }}</td>
                     <td class="text-xs-left">{{ props.item.email }}</td>
                     <td class="text-xs-left">
-                        <field mask="(##) ####-####" :value="props.item.telefone" :masked="masked"></field>
+                        <field mask="(##) #####-####" :value="props.item.telefone" :masked="masked"></field>
                     </td>
 
                     <td class="text-xs-center">
@@ -139,8 +139,6 @@
                     .get('https://viacep.com.br/ws/72005195/json/'+ this.cliente.cep)
                         console.log(this.formCliente.cep)
             },
-
-
             getCliente() {
                 loading.show();
                 axios
