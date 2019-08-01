@@ -47,7 +47,7 @@ class ServicoController extends Controller
         MAil::send('mail.start', $servico, function($message) use ($servico) {
             $message->to($servico['cliente']['email'], 'To Website')
                 ->subject('Acabamos de registrar seu serviço no Lavajato Tio San');
-            $message->from('lavajatotiosan@naoresponda','From Visitor');
+            $message->from('lavajatotiosan@naoresponda','Lava Jato Tio San');
         });
     }
 
@@ -66,8 +66,6 @@ class ServicoController extends Controller
     {
         return $this->ok($this->repository->findOrFail($id));
     }
-
-
     /**
      * Update the specified resource in storage.
      *

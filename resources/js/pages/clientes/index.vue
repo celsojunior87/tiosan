@@ -152,7 +152,6 @@
                     })
             },
 
-
             novo() {
                 this.resetForm()
                 this.dialog = true
