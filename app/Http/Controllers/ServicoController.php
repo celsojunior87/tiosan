@@ -37,7 +37,7 @@ class ServicoController extends Controller
     {
         $servico = $this->repository->create($request->all());
         $this->enviarEmailInicioServico($servico);
-        return $this->success(['msg' => 'Salvo com sucesso']);
+        return $this->success(['msg' => 'Salvo e Enviado com sucesso']);
 
     }
 
