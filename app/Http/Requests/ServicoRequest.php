@@ -24,14 +24,15 @@ class ServicoRequest extends FormRequest
     public function rules()
     {
         return [
-            'preco' =>'required|unique:servicos',
-            'data_servico'=>'required|unique:servicos',
-            'categoria'=>'required|unique:servicos',
-            'hora_saida'=>'required|unique:servicos',
-            'tipo_pagamento'=>'required|unique:servicos',
-            'id_cliente'=>'required|unique:servicos',
-            'id_tipo_servico'=>'required|unique:servicos',
-            'id_veiculo'=>'required|unique:servicos',
+
+            'preco' =>'required:servicos',
+            'data_servico'=>'required:servicos',
+            'categoria'=>'required:servicos',
+            'hora_entrada'=>'required:servicos',
+            'tipo_pagamento'=>'required:servicos',
+            'id_cliente'=>'required:servicos',
+            'id_tipo_servico'=>'required:servicos',
+            'id_veiculo'=>'required:servicos',
         ];
     }
 }

@@ -20,8 +20,9 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('tipo-veiculo', 'TipoVeiculoController');
     Route::resource('veiculo', 'VeiculoController');
     Route::resource('tipo-servico', 'TipoServicoController');
-    Route::get('veiculo/buscar-cliente-por-placa/{placa}', 'VeiculoController@buscarClientePorPlaca');
     Route::resource('servico', 'ServicoController');
+    Route::get('veiculo/buscar-cliente-por-placa/{placa}', 'VeiculoController@buscarClientePorPlaca');
+
 
     Route::post('logout', 'Auth\LoginController@logout');
     Route::patch('settings/profile', 'Settings\ProfileController@update');

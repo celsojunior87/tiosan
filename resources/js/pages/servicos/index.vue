@@ -10,17 +10,17 @@
                         <v-layout wrap>
                             <v-flex xs4>
                                 <v-text-field label="Placa" v-model="formServico.placa"
-                                              v-on:change="buscarPorPlaca" name="placa" required ></v-text-field>
+                                              v-on:change="buscarPorPlaca" name="placa"   :disabled="isDisabled"   required ></v-text-field>
                                 <show-error :form-name="formServico" prop-name="placa"></show-error>
                             </v-flex>
                             <v-flex xs8>
                                 <v-text-field label="Cliente" v-model="formServico.nome"
-                                                   required></v-text-field>
+                                              :disabled="isDisabled"     required></v-text-field>
                                 <show-error :form-name="formServico" ></show-error>
                             </v-flex>
                             <v-flex xs4>
                                 <v-text-field label="Modelo" v-model="formServico.modelo"
-                                              required></v-text-field>
+                                              :disabled="isDisabled"    required></v-text-field>
                             </v-flex>
                             <v-flex xs8>
                                 <v-select
@@ -66,11 +66,11 @@
                             </v-flex>
                             <v-flex xs4>
                                 <v-text-field label="Hora da Entrada" v-model="formServico.hora_entrada"
-                                              mask=" ##:##"  required></v-text-field>
+                                             return-masked-value  mask=" ##:##"  required></v-text-field>
                             </v-flex>
                             <v-flex xs4>
                                 <v-text-field label="Hora de Saida" v-model="formServico.hora_saida"
-                                              mask=" ##:##"   required></v-text-field>
+                                              return-masked-value mask=" ##:##"   required></v-text-field>
                             </v-flex>
                             <v-flex xs4>
                                 <v-select
@@ -103,8 +103,8 @@
                             </v-flex>
                             <v-flex xs4>
                                 <v-currency-field label="Preço Adicional" v-bind="currency_config" v-if="enabled"
-                                                  v-model="formServico.preco_adicional"></v-currency-field>
-                                <show-error :form-name="formServico" prop-name="preco_adicional"></show-error>
+                                                  v-model="formServico.preco_adc"></v-currency-field>
+                                <show-error :form-name="formServico" prop-name="preco_adc"></show-error>
                             </v-flex>
                         </v-layout >
                         <v-layout>
@@ -115,6 +115,7 @@
                                         class="shrink mr-2 mt-0"
                                 ></v-checkbox>
                                 <v-text-field
+                                        v-model="formServico.obs_adicionais"
                                         :disabled="!enabled"
                                         label="Possui Serviço Adicionais?"
                                 ></v-text-field>
@@ -128,6 +129,7 @@
                                         class="shrink mr-2 mt-0"
                                 ></v-checkbox>
                                 <v-text-field
+                                        v-model="formServico.obs_avarias"
                                         :disabled="!enabledAvaria"
                                         label="O Veiculo Possui Avarias?"
                                 ></v-text-field>
@@ -166,28 +168,28 @@
             </v-card-title>
             <v-data-table
                     :headers="headers"
-                    :items="cliente"
+                    :items="servico"
                     :search="search"
                     rows-per-page-text="por página"
                     no-results-text="Nenhum registro encontrado"
                     :rows-per-page-items="rowsPerPageItems"
             >
                 <template v-slot:items="props">
-                    <td class="text-xs-left">{{ props.item.nome }}</td>
-                    <td class="text-xs-left">{{ props.item.email }}</td>
+                    <td class="text-xs-left">{{ props.item.data_servico | formatDate}}</td>
+                    <td class="text-xs-left">{{ props.item.hora_entrada}}</td>
+                    <td class="text-xs-left">{{ props.item.cliente.hora_saida }}</td>
+                    <td class="text-xs-left">{{ props.item.tipo_servico.tipo_servico }}</td>
+                    <td class="text-xs-left">{{ props.item.veiculo.modelo }}</td>
+                    <td class="text-xs-left">{{ props.item.veiculo.cor }}</td>
 
                     <td class="text-xs-center">
                         <v-btn small color="blue" @click="editar(props.item.id)">
                             <v-icon dark left>edit</v-icon>
-                            Editar
+                            Editar Serviço
                         </v-btn>
-                        <v-btn small color="error" @click="remover(props.item.id)">
-                            <v-icon dark left>clear</v-icon>
-                            Excluir
-                        </v-btn>
-                        <v-btn small color="green" @click="(props.item.id)">
+                        <v-btn small color="green" @click="enviarEmail(props.item.id)">
                             <v-icon dark left>send</v-icon>
-                            Enviar para o cliente
+                            Finalizar Serviço
                         </v-btn>
                     </td>
                 </template>
@@ -226,6 +228,7 @@
             dialog: false,
             dialogDate: false,
             enabled: false,
+            isDisabled:true,
             enabledAvaria:false,
             search: '',
             cliente: [],
@@ -246,9 +249,12 @@
             dateFormatted: moment(moment).format('DD/MM/YYYY'),
 
             headers: [
-                {text: 'Nome', value: 'nome'},
-                {text: 'Email', value: 'email'},
-                {text: 'Telefone', value: 'email'},
+                {text: 'Data da Lavagem', value: 'data_servico'},
+                {text: 'Hora da Entrada', value: 'hora_entrada'},
+                {text: 'Hora da Saída', value: 'hora_saida'},
+                {text: 'Tipo de Serviço', value: 'id_tipo_servico'},
+                {text: 'Cor', value: 'cor'},
+                {text: 'Veiculo', value: 'modelo'},
                 {text: 'Ações', value: '', align: 'center'},
             ],
             formServico: new Form({
@@ -262,16 +268,23 @@
                 hora_entrada:'',
                 data_servico:'',
                 data_saida:'',
-                preco_adicional:'',
+                preco_adc:'',
                 tipo_pagamento:'',
                 obs_adicionais:'',
                 obs_avarias:'',
                 categoria:'',
                 preco:'',
                 image:'',
+                cor:'',
             })
         }),
         methods: {
+
+            enviarEmail(){
+
+
+            },
+
 
             buscarPorPlaca(){
                 loading.show();
@@ -280,14 +293,22 @@
                     .then((res) => {
                         this.formServico.modelo = res.data.modelo
                         this.formServico.nome = res.data.cliente.nome
-                        this.formServico.id_cliente = res.data.cliente.id_cliente
-                        this.formServico.id = res.data.cliente.id
+                        this.formServico.id_cliente = res.data.id_cliente
+                        this.formServico.id_veiculo = res.data.id
+
                     })
+                    //Pega o erro do backend
+                    .catch((error) => {
+                        const _this = this
+                        error.response.data.error.msg.map(function (value, key) {
+                            _this.$toasted.info(value)
+                        })
+                    })
+
                     .finally(() => {
                         loading.hide()
                     })
             },
-
             getServico() {
                 loading.show();
                 axios
@@ -313,10 +334,17 @@
                         this.cliente = res.data;
                     })
             },
-
+            getVeiculo() {
+                axios
+                    .get('/api/veiculo')
+                    .then((res) => {
+                        this.veiculo = res.data;
+                    })
+            },
 
             novo() {
                 this.resetForm()
+                this.isDisabled= false
                 this.dialog = true
             },
             editar(id) {
@@ -324,6 +352,10 @@
                     .get('/api/servico/'+id)
                     .then((res) => {
                         this.formServico = res.data
+                        this.formServico.placa = res.data.veiculo.placa
+                        this.formServico.modelo = res.data.veiculo.modelo
+                        this.formServico.nome = res.data.cliente.nome
+                        this.isDisabled = true
                         this.dialog = true
                     })
             },
@@ -402,8 +434,11 @@
                     hora_entrada:'',
                     hora_saida:'',
                     tipo_pagamento:'',
+                    preco_adc:'',
                     obs_adicionais:'',
                     obs_avarias:'',
+                    preco:'',
+                    cor:'',
                 })
             },
             formatDate (date) {
@@ -425,6 +460,7 @@
             this.getCliente()
             this.getServico()
             this.getTipoServico()
+            this.getVeiculo()
         },
         computed: {
             computedDateFormatted () {

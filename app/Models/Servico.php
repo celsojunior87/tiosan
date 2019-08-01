@@ -8,10 +8,10 @@ class Servico extends Model
 {
     protected $table = 'servicos';
 
-    protected $fillable = ['preco','adicionais',
-        'preco_adc','data_servico','hora_saida','obs_adicionais','obs_avarias',
+    protected $fillable = ['preco','adicionais','preco_adc','data_servico','hora_saida',
+        'obs_adicionais','obs_avarias','hora_entrada',
         'categoria',
-        'tipo_pagamento','id_cliente','id_tipo_servico','id_veiculo','id_user'];
+        'tipo_pagamento','id_cliente','id_tipo_servico','id_veiculo'];
 
     public function veiculo()
     {

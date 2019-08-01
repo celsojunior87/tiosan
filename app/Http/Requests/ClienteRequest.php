@@ -24,7 +24,7 @@ class ClienteRequest extends FormRequest
     public function rules()
     {
         return [
-            'nome' => "required|unique:clientes,nome,{$this->segment('3')},id",
+            'nome' => "required:clientes",
             'telefone' => "required|unique:clientes,telefone,{$this->segment('3')},id",
             'email' => "required|unique:clientes,email,{$this->segment('3')},id",
 

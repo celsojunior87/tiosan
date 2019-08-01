@@ -37,6 +37,8 @@ class VeiculoController extends Controller
     public function store(VeiculoRequest $request)
     {
         $veiculo = $this->veiculo->create($request->all());
+        if(!$veiculo['placa'])
+            return $this->error(['msg'=>'A Placa ja existe Na Base de dados']);
         return response()->json($veiculo);
     }
 
@@ -85,6 +87,9 @@ class VeiculoController extends Controller
     {
        $veiculo = $this->repository->buscarVeiculoporPlaca($placa);
 
+       if(!$veiculo)
+           return $this->error(['msg'=>'Não Existe Esse Cliente, Por favor Cadastre novamente o cliente ou 
+           o Veiculo']);
        return response()->json($veiculo);
 
     }

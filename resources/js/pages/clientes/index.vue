@@ -15,10 +15,11 @@
                             <v-flex xs4>
                                 <v-text-field label="Telefone" v-model="formCliente.telefone" mask=" (##) #####-####"
                                               required></v-text-field>
+                                <show-error :form-name="formCliente" prop-name="telefone"></show-error>
                             </v-flex>
                             <v-flex xs4>
-                                <v-text-field label="Email" v-model="formCliente.email"
-                                              required></v-text-field>
+                                <v-text-field label="Email" v-model="formCliente.email" required></v-text-field>
+                                <show-error :form-name="formCliente" prop-name="email"></show-error>
                             </v-flex>
                             <v-flex xs4>
                                 <v-text-field label="Cep" @change="buscarCep" v-model="formCliente.cep"
@@ -77,7 +78,7 @@
                     <td class="text-xs-left">{{ props.item.nome }}</td>
                     <td class="text-xs-left">{{ props.item.email }}</td>
                     <td class="text-xs-left">
-                        <field mask="(##) ####-####" :value="props.item.telefone" :masked="masked"></field>
+                        <field mask="(##) #####-####" :value="props.item.telefone" :masked="masked"></field>
                     </td>
 
                     <td class="text-xs-center">
@@ -139,8 +140,6 @@
                     .get('https://viacep.com.br/ws/72005195/json/'+ this.cliente.cep)
                         console.log(this.formCliente.cep)
             },
-
-
             getCliente() {
                 loading.show();
                 axios

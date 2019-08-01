@@ -168,10 +168,6 @@
                                            @click="login">
                                         Entrar
                                     </v-btn>
-                                    <v-btn @click="preencherLogin"
-                                    >
-                                        Preencher Admin
-                                    </v-btn>
                                 </div>
                             </v-layout>
                         </v-form>

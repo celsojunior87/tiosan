@@ -5,16 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ServicoRequest;
 use App\Models\Servico;
 use App\Repositories\ServicoRepository;
-use Illuminate\Http\Request;
 
 class ServicoController extends Controller
 {
     protected $repository;
     protected $servico;
 
-    public function __construct(ServicoRepository $servicoRepository, Servico $model)
+    public function __construct(ServicoRepository $repository, Servico $model)
     {
-        $this->repository = $servicoRepository;
+        $this->repository = $repository;
         $this->servico = $model;
     }
     /**
@@ -27,7 +26,6 @@ class ServicoController extends Controller
         return $this->ok($this->repository->getAll());
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
@@ -36,10 +34,9 @@ class ServicoController extends Controller
      */
     public function store(ServicoRequest $request)
     {
-        $tt = $request->all();
-        dd($tt);
-        $servico = $this->servico->create($request->all());
-        return response()->json($servico);
+        $this->repository->create($request->all());
+        return $this->success(['msg' => 'Salvo com sucesso']);
+
     }
 
     /**
@@ -50,8 +47,7 @@ class ServicoController extends Controller
      */
     public function show($id)
     {
-        $servico = $this->servico->find($id);
-        return response()->json($servico);
+        return $this->ok($this->repository->findOrFail($id));
     }
 
 
@@ -64,13 +60,9 @@ class ServicoController extends Controller
      */
     public function update(ServicoRequest $request, $id)
     {
-
-        if(!$servico = $this->servico->find($id))
-            return response()->json('error','Not Found');
-
-        $servico->update($request->all());
-
-        return response()->json(['success']);
+        $servico = $this->repository->findOrFail($id);
+        $this->repository->update($servico, $request->all());
+        return $this->success(['msg' => 'Atualizado com sucesso']);
     }
 
     /**
