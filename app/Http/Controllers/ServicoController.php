@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ServicoRequest;
 use App\Models\Servico;
 use App\Repositories\ServicoRepository;
+use Illuminate\Support\Facades\Mail;
 
 class ServicoController extends Controller
 {
@@ -34,8 +35,24 @@ class ServicoController extends Controller
      */
     public function store(ServicoRequest $request)
     {
-        $this->repository->create($request->all());
+        $servico = $this->repository->create($request->all());
+        $this->enviarEmailInicioServico($servico);
         return $this->success(['msg' => 'Salvo com sucesso']);
+
+    }
+
+    public function enviarEmailInicioServico($servico)
+    {
+        $servico = $this->repository->findOrFail($servico->id)->toArray();
+        MAil::send('mail.start', $servico, function($message) use ($servico) {
+            $message->to($servico['cliente']['email'], 'To Website')
+                ->subject('Acabamos de registrar seu serviço no Lavajato Tio San');
+            $message->from('lavajatotiosan@naoresponda','From Visitor');
+        });
+    }
+
+    public function enviarEmailFimServico($servico)
+    {
 
     }
 
