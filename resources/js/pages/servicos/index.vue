@@ -177,7 +177,6 @@
                 <template v-slot:items="props">
                     <td class="text-xs-left">{{ props.item.data_servico | formatDate}}</td>
                     <td class="text-xs-left">{{ props.item.hora_entrada}}</td>
-                    <td class="text-xs-left">{{ props.item.cliente.hora_saida }}</td>
                     <td class="text-xs-left">{{ props.item.tipo_servico.tipo_servico }}</td>
                     <td class="text-xs-left">{{ props.item.veiculo.modelo }}</td>
                     <td class="text-xs-left">{{ props.item.veiculo.cor }}</td>
@@ -251,7 +250,6 @@
             headers: [
                 {text: 'Data da Lavagem', value: 'data_servico'},
                 {text: 'Hora da Entrada', value: 'hora_entrada'},
-                {text: 'Hora da Saída', value: 'hora_saida'},
                 {text: 'Tipo de Serviço', value: 'id_tipo_servico'},
                 {text: 'Cor', value: 'cor'},
                 {text: 'Veiculo', value: 'modelo'},
