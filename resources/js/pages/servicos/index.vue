@@ -344,6 +344,7 @@
 
             novo() {
                 this.resetForm()
+                this.isDisabled= false
                 this.dialog = true
             },
             editar(id) {
