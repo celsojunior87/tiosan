@@ -70,7 +70,7 @@
                             </v-flex>
                             <v-flex xs4>
                                 <v-text-field label="Hora de Saida" v-model="formServico.hora_saida"
-                                              mask=" ##:##"   required></v-text-field>
+                                              return-masked-value mask=" ##:##"   required></v-text-field>
                             </v-flex>
                             <v-flex xs4>
                                 <v-select
@@ -176,22 +176,19 @@
                 <template v-slot:items="props">
                     <td class="text-xs-left">{{ props.item.data_servico | formatDate}}</td>
                     <td class="text-xs-left">{{ props.item.hora_entrada}}</td>
+                    <td class="text-xs-left">{{ props.item.cliente.hora_saida }}</td>
                     <td class="text-xs-left">{{ props.item.tipo_servico.tipo_servico }}</td>
-                    <td class="text-xs-left">{{ props.item.cliente.nome }}</td>
                     <td class="text-xs-left">{{ props.item.veiculo.modelo }}</td>
+                    <td class="text-xs-left">{{ props.item.veiculo.cor }}</td>
 
                     <td class="text-xs-center">
                         <v-btn small color="blue" @click="editar(props.item.id)">
                             <v-icon dark left>edit</v-icon>
-                            Editar
+                            Editar Serviço
                         </v-btn>
-                        <v-btn small color="error" @click="remover(props.item.id)">
-                            <v-icon dark left>clear</v-icon>
-                            Excluir
-                        </v-btn>
-                        <v-btn small color="green" @click="(props.item.id)">
+                        <v-btn small color="green" @click="enviarEmail(props.item.id)">
                             <v-icon dark left>send</v-icon>
-                            Enviar para o cliente
+                            Finalizar Serviço
                         </v-btn>
                     </td>
                 </template>
@@ -252,8 +249,9 @@
             headers: [
                 {text: 'Data da Lavagem', value: 'data_servico'},
                 {text: 'Hora da Entrada', value: 'hora_entrada'},
+                {text: 'Hora da Saída', value: 'id_cliente'},
                 {text: 'Tipo de Serviço', value: 'id_tipo_servico'},
-                {text: 'Cliente', value: 'id_cliente'},
+                {text: 'Cor', value: 'cor'},
                 {text: 'Veiculo', value: 'modelo'},
                 {text: 'Ações', value: '', align: 'center'},
             ],
@@ -275,9 +273,16 @@
                 categoria:'',
                 preco:'',
                 image:'',
+                cor:'',
             })
         }),
         methods: {
+
+            enviarEmail(){
+
+
+            },
+
 
             buscarPorPlaca(){
                 loading.show();
@@ -302,7 +307,6 @@
                         loading.hide()
                     })
             },
-
             getServico() {
                 loading.show();
                 axios
@@ -336,7 +340,6 @@
                     })
             },
 
-
             novo() {
                 this.resetForm()
                 this.dialog = true
@@ -345,7 +348,6 @@
                 axios
                     .get('/api/servico/'+id)
                     .then((res) => {
-                        console.log(res)
                         this.formServico = res.data
                         this.dialog = true
                     })
@@ -394,16 +396,19 @@
                             this.getServico();
                         })
                         .catch((error) => {
+                            loading.hide();
                             this.$toasted.error(error.msg)
                         })
                 } else {
                     this.formServico.post('/api/servico')
                         .then((response) => {
                             this.dialog = false
+                            loading.hide();
                             this.$toasted.success(response.msg)
                             this.getServico();
                         })
                         .catch((error) => {
+                            loading.hide();
                             this.$toasted.error(error.msg)
                         })
                 }
@@ -426,6 +431,7 @@
                     obs_adicionais:'',
                     obs_avarias:'',
                     preco:'',
+                    cor:'',
                 })
             },
             formatDate (date) {

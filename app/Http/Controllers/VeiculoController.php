@@ -37,6 +37,8 @@ class VeiculoController extends Controller
     public function store(VeiculoRequest $request)
     {
         $veiculo = $this->veiculo->create($request->all());
+        if(!$veiculo['placa'])
+            return $this->error(['msg'=>'A Placa ja existe Na Base de dados']);
         return response()->json($veiculo);
     }
 

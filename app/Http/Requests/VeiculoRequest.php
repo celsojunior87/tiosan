@@ -27,7 +27,7 @@ class VeiculoRequest extends FormRequest
             'marca' =>'required:veiculos',
             'modelo' =>'required:veiculos',
             'ano' =>'required:veiculos',
-            'placa' =>'required:veiculos',
+            'placa' =>"required|unique:veiculos,placa,{$this->segment('3')},id",
             'cor' =>'required:veiculos',
             'id_cliente' => 'required',
             'id_tipo_veiculo' => 'required',

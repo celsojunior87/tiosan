@@ -138,7 +138,7 @@
                                     this.getTipoVeiculo();
                                 } else {
                                     this.$swal.fire(
-                                        'Cliente não foi excluído',
+                                        'Tipo não foi excluído',
                                         '',
                                         'error'
                                     )

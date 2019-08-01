@@ -15,10 +15,11 @@
                             <v-flex xs4>
                                 <v-text-field label="Telefone" v-model="formCliente.telefone" mask=" (##) #####-####"
                                               required></v-text-field>
+                                <show-error :form-name="formCliente" prop-name="telefone"></show-error>
                             </v-flex>
                             <v-flex xs4>
-                                <v-text-field label="Email" v-model="formCliente.email"
-                                              required></v-text-field>
+                                <v-text-field label="Email" v-model="formCliente.email" required></v-text-field>
+                                <show-error :form-name="formCliente" prop-name="email"></show-error>
                             </v-flex>
                             <v-flex xs4>
                                 <v-text-field label="Cep" @change="buscarCep" v-model="formCliente.cep"
