@@ -10,17 +10,17 @@
                         <v-layout wrap>
                             <v-flex xs4>
                                 <v-text-field label="Placa" v-model="formServico.placa"
-                                              v-on:change="buscarPorPlaca" name="placa" required ></v-text-field>
+                                              v-on:change="buscarPorPlaca" name="placa"   :disabled="isDisabled"   required ></v-text-field>
                                 <show-error :form-name="formServico" prop-name="placa"></show-error>
                             </v-flex>
                             <v-flex xs8>
                                 <v-text-field label="Cliente" v-model="formServico.nome"
-                                                   required></v-text-field>
+                                              :disabled="isDisabled"     required></v-text-field>
                                 <show-error :form-name="formServico" ></show-error>
                             </v-flex>
                             <v-flex xs4>
                                 <v-text-field label="Modelo" v-model="formServico.modelo"
-                                              required></v-text-field>
+                                              :disabled="isDisabled"    required></v-text-field>
                             </v-flex>
                             <v-flex xs8>
                                 <v-select
@@ -129,6 +129,7 @@
                                         class="shrink mr-2 mt-0"
                                 ></v-checkbox>
                                 <v-text-field
+                                        v-model="formServico.obs_avarias"
                                         :disabled="!enabledAvaria"
                                         label="O Veiculo Possui Avarias?"
                                 ></v-text-field>
@@ -227,6 +228,7 @@
             dialog: false,
             dialogDate: false,
             enabled: false,
+            isDisabled:true,
             enabledAvaria:false,
             search: '',
             cliente: [],
@@ -249,7 +251,7 @@
             headers: [
                 {text: 'Data da Lavagem', value: 'data_servico'},
                 {text: 'Hora da Entrada', value: 'hora_entrada'},
-                {text: 'Hora da Saída', value: 'id_cliente'},
+                {text: 'Hora da Saída', value: 'hora_saida'},
                 {text: 'Tipo de Serviço', value: 'id_tipo_servico'},
                 {text: 'Cor', value: 'cor'},
                 {text: 'Veiculo', value: 'modelo'},
@@ -349,6 +351,10 @@
                     .get('/api/servico/'+id)
                     .then((res) => {
                         this.formServico = res.data
+                        this.formServico.placa = res.data.veiculo.placa
+                        this.formServico.modelo = res.data.veiculo.modelo
+                        this.formServico.nome = res.data.cliente.nome
+                        this.isDisabled = true
                         this.dialog = true
                     })
             },

@@ -26,7 +26,6 @@ class ServicoController extends Controller
         return $this->ok($this->repository->getAll());
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
@@ -48,8 +47,7 @@ class ServicoController extends Controller
      */
     public function show($id)
     {
-        $servico = $this->servico->find($id);
-        return response()->json($servico);
+        return $this->ok($this->repository->findOrFail($id));
     }
 
 
@@ -62,13 +60,9 @@ class ServicoController extends Controller
      */
     public function update(ServicoRequest $request, $id)
     {
-
-        if(!$servico = $this->servico->find($id))
-            return response()->json('error','Not Found');
-
-        $servico->update($request->all());
-
-        return response()->json(['success']);
+        $servico = $this->repository->findOrFail($id);
+        $this->repository->update($servico, $request->all());
+        return $this->success(['msg' => 'Atualizado com sucesso']);
     }
 
     /**

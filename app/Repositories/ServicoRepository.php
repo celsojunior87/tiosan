@@ -25,7 +25,7 @@ class ServicoRepository
 
     public function findOrFail($id = null)
     {
-        $servico = $this->servico->find($id);
+        $servico = $this->servico->with(['veiculo', 'cliente','tipoServico'])->find($id);
 
         if (!$servico) {
             throw ValidationException::withMessages(['msg' => ' Serviço não encontrado']);
@@ -51,7 +51,6 @@ class ServicoRepository
             'preco_adc' => isset($params['preco_adc']) ? $params['preco_adc'] : null,
             'tipo_pagamento' => isset($params['tipo_pagamento']) ? $params['tipo_pagamento'] : null,
             'categoria' => isset($params['categoria']) ? $params['categoria'] : null,
-            'id_user' => isset($params['id_user']) ? $params['id_user'] : $user->getAuthIdentifier() ,
             'id_tipo_servico' => $params['id_tipo_servico'],
             'id_veiculo' => $params['id_veiculo'],
             'id_cliente' => $params['id_cliente'],
@@ -60,6 +59,11 @@ class ServicoRepository
         ];
 
         return $formatted;
+    }
+    public function update(Servico $servico, $params = array())
+    {
+        $servico->forceFill($this->formatParams($params))->save();
+        return $servico;
     }
 
 
