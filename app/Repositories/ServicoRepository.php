@@ -51,6 +51,7 @@ class ServicoRepository
             'preco_adc' => isset($params['preco_adc']) ? $params['preco_adc'] : null,
             'tipo_pagamento' => isset($params['tipo_pagamento']) ? $params['tipo_pagamento'] : null,
             'categoria' => isset($params['categoria']) ? $params['categoria'] : null,
+            'funcionario' => isset($params['funcionario']) ? $params['funcionario'] : null,
             'id_tipo_servico' => $params['id_tipo_servico'],
             'id_veiculo' => $params['id_veiculo'],
             'id_cliente' => $params['id_cliente'],

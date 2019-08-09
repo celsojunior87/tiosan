@@ -22,7 +22,7 @@
                                 <v-text-field label="Modelo" v-model="formServico.modelo"
                                               :disabled="isDisabled"    required></v-text-field>
                             </v-flex>
-                            <v-flex xs8>
+                            <v-flex xs6>
                                 <v-select
                                         v-if="tipoServico"
                                         v-bind:items="tipoServico"
@@ -67,6 +67,7 @@
                             <v-flex xs4>
                                 <v-text-field label="Hora da Entrada" v-model="formServico.hora_entrada"
                                              return-masked-value  mask=" ##:##"  required></v-text-field>
+                                <show-error :form-name="formServico" prop-name="hora_entrada"></show-error>
                             </v-flex>
                             <v-flex xs4>
                                 <v-text-field label="Hora de Saida" v-model="formServico.hora_saida"
@@ -94,11 +95,28 @@
                                         v-model="formServico.categoria"
                                         name="categoria"
                                 ></v-select>
-                                <show-error :form-name="formServico" prop-name="categoria"></show-error>
+                                <show-error :form-name="formServico" prop-name="funcionario"></show-error>
                             </v-flex>
                             <v-flex xs4>
-                                <v-currency-field label="Preço" v-bind="currency_config"
-                                                  v-model="formServico.preco"></v-currency-field>
+                                <v-select
+                                        v-if="funcionarioServico"
+                                        v-bind:items="funcionarioServico"
+                                        label="Funcionario"
+                                        item-text="text"
+                                        item-value="value"
+                                        v-model="formServico.funcionario"
+                                        name="funcionario"
+                                ></v-select>
+                                <show-error :form-name="formServico" prop-name="funcionario"></show-error>
+                            </v-flex>
+
+                            <v-flex xs4>
+                                <v-currency-field
+                                         label="Preço"
+                                         v-bind="currency_config"
+                                         v-model="formServico.preco">
+
+                                </v-currency-field>
                                 <show-error :form-name="formServico" prop-name="preco"></show-error>
                             </v-flex>
                             <v-flex xs4>
@@ -205,23 +223,26 @@
     import {mask} from 'vue-the-mask'
     import moment from 'moment'
     import {VMoney} from 'v-money'
+    import currency from 'v-currency-field'
 
     export default {
         components: {Field},
-        directives: {mask, moment, VMoney},
+        directives: {mask, moment, VMoney, currency},
         name: "index",
-        data: vm => ({
+        data: () => ({
             currency_config: {
+                errors: {},
                 decimal: ',',
                 thousands: '.',
-                prefix: 'R$ ',
+                prefix: 'R$',
                 suffix: '',
                 precision: 2,
-                masked: false,
+                toFixed: 2,
                 allowBlank: false,
                 min: Number.MIN_SAFE_INTEGER,
                 max: Number.MAX_SAFE_INTEGER
             },
+            apartments: [],
             masked: true,
             rowsPerPageItems: [10,25,{"text":"","value":10}],
             dialog: false,
@@ -240,6 +261,12 @@
                 {text: 'Particular', value: 'P'},
                 {text: 'Uber', value: 'U'},
                 {text: 'Empresa', value: 'E'},
+            ],
+            funcionarioServico:[
+                {text: 'Maiko', value: 'Maiko'},
+                {text: 'Danilo', value: 'Danilo'},
+                {text: 'Kaique', value: 'Kaique'},
+                {text: 'Sanley', value: 'Sanley'},
             ],
             servico: [],
             tipoServico:[],
@@ -274,12 +301,13 @@
                 preco:'',
                 image:'',
                 cor:'',
+                funcionario: '',
             })
         }),
         methods: {
 
             enviarEmail(){
-
+                console.log('estou aqui');
 
             },
 
@@ -313,6 +341,9 @@
                     .get('/api/servico')
                     .then((res) => {
                         this.servico = res.data;
+                        //this.servico.preco = (parseFloat(res.data.preco).toFixed(2));
+
+                        this.servico.outros = res.data.outros;
                     })
                     .finally(() => {
                         loading.hide()
@@ -437,6 +468,7 @@
                     obs_avarias:'',
                     preco:'',
                     cor:'',
+                    funcionario: '',
                 })
             },
             formatDate (date) {

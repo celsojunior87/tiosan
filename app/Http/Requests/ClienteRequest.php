@@ -26,7 +26,7 @@ class ClienteRequest extends FormRequest
         return [
             'nome' => "required:clientes",
             'telefone' => "required|unique:clientes,telefone,{$this->segment('3')},id",
-            'email' => "required|unique:clientes,email,{$this->segment('3')},id",
+            'email' => "required:clientes",
 
         ];
     }

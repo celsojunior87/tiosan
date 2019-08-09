@@ -30,6 +30,7 @@ class ServicoRequest extends FormRequest
             'categoria'=>'required:servicos',
             'hora_entrada'=>'required:servicos',
             'tipo_pagamento'=>'required:servicos',
+            'funcionario'=>'required:servicos',
             'id_cliente'=>'required:servicos',
             'id_tipo_servico'=>'required:servicos',
             'id_veiculo'=>'required:servicos',

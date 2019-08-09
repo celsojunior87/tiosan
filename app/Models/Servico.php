@@ -10,7 +10,7 @@ class Servico extends Model
 
     protected $fillable = ['preco','adicionais','preco_adc','data_servico','hora_saida',
         'obs_adicionais','obs_avarias','hora_entrada',
-        'categoria',
+        'categoria','funcionario',
         'tipo_pagamento','id_cliente','id_tipo_servico','id_veiculo'];
 
     public function veiculo()

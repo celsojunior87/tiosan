@@ -4,17 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ServicoRequest;
 use App\Models\Servico;
+use App\Repositories\ClienteRepository;
 use App\Repositories\ServicoRepository;
 use Illuminate\Support\Facades\Mail;
 
 class ServicoController extends Controller
 {
+    protected $clienteRepository;
     protected $repository;
     protected $servico;
 
-    public function __construct(ServicoRepository $repository, Servico $model)
+    public function __construct(ServicoRepository $repository, Servico $model, ClienteRepository $clienteRepository)
     {
         $this->repository = $repository;
+        $this->clienteRepository = $clienteRepository;
         $this->servico = $model;
     }
     /**
@@ -53,7 +56,7 @@ class ServicoController extends Controller
 
     public function enviarEmailFimServico($servico)
     {
-
+            dd('estou aqui');
     }
 
     /**
