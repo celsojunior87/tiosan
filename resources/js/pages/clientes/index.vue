@@ -137,8 +137,17 @@
             buscarCep(){
 
                 axios
-                    .get('https://viacep.com.br/ws/72005195/json/'+ this.cliente.cep)
-                        console.log(this.formCliente.cep)
+                    .get(`https://viacep.com.br/ws/${this.formCliente.cep}/json/`)
+                    .then((res) => {
+                        this.cliente = res.data;
+                        this.formCliente.uf = res.data.uf;
+                        this.formCliente.cidade = res.data.localidade;
+                        this.formCliente.bairro = res.data.bairro;
+                        this.formCliente.complemento = res.data.complemento;
+
+                    }).catch(err =>{
+                        this.$toasted.error('Cep Inexistente');
+                    })
             },
             getCliente() {
                 loading.show();
