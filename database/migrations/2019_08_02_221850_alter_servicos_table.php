@@ -25,6 +25,6 @@ class AlterServicosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('servicos');
+//        Schema::dropIfExists('servicos');
     }
 }

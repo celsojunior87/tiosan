@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ServicoRequest;
+use App\Models\Cliente;
 use App\Models\Servico;
 use App\Repositories\ClienteRepository;
 use App\Repositories\ServicoRepository;
@@ -38,10 +39,9 @@ class ServicoController extends Controller
      */
     public function store(ServicoRequest $request)
     {
-        $servico = $this->repository->create($request->all());
-        $this->enviarEmailInicioServico($servico);
-        return $this->success(['msg' => 'Salvo e Enviado com sucesso']);
+        $this->repository->create($request->all());
 
+        return $this->success(['msg' => 'Salvo e Enviado com sucesso']);
     }
 
     public function enviarEmailInicioServico($servico)
