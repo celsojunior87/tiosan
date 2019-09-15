@@ -135,7 +135,6 @@
         methods: {
 
             buscarCep(){
-
                 axios
                     .get(`https://viacep.com.br/ws/${this.formCliente.cep}/json/`)
                     .then((res) => {

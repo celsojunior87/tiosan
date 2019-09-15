@@ -20,12 +20,12 @@ class ServicoRepository
 
     public function getAll()
     {
-        return $this->servico->with(['veiculo', 'cliente','tipoServico'])->get();
+        return $this->servico->with(['veiculo', 'cliente', 'tipoServico'])->get();
     }
 
     public function findOrFail($id = null)
     {
-        $servico = $this->servico->with(['veiculo', 'cliente','tipoServico'])->find($id);
+        $servico = $this->servico->with(['veiculo', 'cliente', 'tipoServico'])->find($id);
 
         if (!$servico) {
             throw ValidationException::withMessages(['msg' => ' Serviço não encontrado']);
@@ -33,6 +33,7 @@ class ServicoRepository
 
         return $servico;
     }
+
     public function create($params)
     {
         return $this->servico::create($this->formatParams($params));
@@ -52,15 +53,17 @@ class ServicoRepository
             'tipo_pagamento' => isset($params['tipo_pagamento']) ? $params['tipo_pagamento'] : null,
             'categoria' => isset($params['categoria']) ? $params['categoria'] : null,
             'funcionario' => isset($params['funcionario']) ? $params['funcionario'] : null,
+            'image' => isset($params['image']) ? $params['image'] : null,
             'id_tipo_servico' => $params['id_tipo_servico'],
             'id_veiculo' => $params['id_veiculo'],
             'id_cliente' => $params['id_cliente'],
-
+            'id_veiculo'
 
         ];
 
         return $formatted;
     }
+
     public function update(Servico $servico, $params = array())
     {
         $servico->forceFill($this->formatParams($params))->save();
@@ -73,22 +76,23 @@ class ServicoRepository
         return $servico->delete();
     }
 
-    public function salvarImagemServico($request)
-    {
-        $data = $request->all();
-
-        if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            $name = kebab_case($request->name);
-            $extension = $request->image->extension();
-
-            $nameFile = "{$name}.{$extension}";
-            $data['image'] = $nameFile;
-
-            $upload = $request->image->storeAs($this->path, $nameFile);
-
-            if (!$upload)
-                return response()->json(['error' => 'Fail_Upload'], 500);
-        }
-    }
+//    public function salvarImagemServico(ServicoRequest $request)
+//    {
+//        $data = $request->all();
+//        if($request->hasFile('image')&& $request->file('image')->isValid()){
+//            $name = $request->id_veiculo;
+//            $extension = $request->image->extension();
+//            $nameFile = "{$name}.{$extension}";
+//            $data['image'] = $nameFile;
+//            $upload = $request->image->storeAs($this->path,$nameFile);
+//
+//            if(!$upload)
+//                return response()->json(['error' => 'Fail_Upload'],500);
+//
+//        }
+//        $product = $this->product->create($data);
+//        return response()->json($product,201);
+//    }
 
 }
+

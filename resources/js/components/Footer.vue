@@ -5,7 +5,7 @@
               class="text--white text-white"
     >
         <span class="px-3">&copy; {{ new Date().getFullYear() }}</span>
-        <span class="text-right right">V -{{getVersion()}}</span>
+        <span class="text-right right">V -2.0</span>
     </v-footer>
 </template>
 

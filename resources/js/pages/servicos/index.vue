@@ -327,7 +327,15 @@
         }),
         methods: {
             enviarEmail() {
-                console.log("estou aqui");
+                axios
+                    .get("/api/servico/enviaremailfimservico/" + this.formServico.id)
+                    .then(res => {
+                        this.servico = res.data;
+                        //console.log
+                    })
+                    .catch(error => {
+                        console.log(error.response.data)
+                    })
             },
 
             buscarPorPlaca() {

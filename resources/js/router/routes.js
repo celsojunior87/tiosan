@@ -20,8 +20,8 @@ const isAuth = (to, from, next) => {
 export default [
     {
         path: '/',
-        name: 'dashboard',
-        component: Dashboard
+        name: 'login',
+        component: Login
     },
     {
         path: '/login',

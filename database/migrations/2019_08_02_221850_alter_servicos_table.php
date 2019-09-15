@@ -15,6 +15,7 @@ class AlterServicosTable extends Migration
     {
         Schema::table('servicos', function (Blueprint $table) {
             $table->string('funcionario');
+            $table->string('image')->nullable();
         });
     }
 

@@ -22,6 +22,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('tipo-servico', 'TipoServicoController');
     Route::resource('servico', 'ServicoController');
     Route::get('veiculo/buscar-cliente-por-placa/{placa}', 'VeiculoController@buscarClientePorPlaca');
+    Route::get('servico/enviaremailfimservico/{id}', 'ServicoController@enviarEmailFimServico');
 
 
     Route::post('logout', 'Auth\LoginController@logout');

@@ -39,8 +39,8 @@ class ServicoController extends Controller
      */
     public function store(ServicoRequest $request)
     {
-        $this->repository->create($request->all());
-
+        $servico = $this->repository->create($request->all());
+        $this->enviarEmailInicioServico($servico);
         return $this->success(['msg' => 'Salvo e Enviado com sucesso']);
     }
 
@@ -54,10 +54,15 @@ class ServicoController extends Controller
         });
     }
 
-    public function enviarEmailFimServico($servico)
-    {
-            dd('estou aqui');
-    }
+//    public function enviarEmailFimServico($servico)
+//    {
+//        $servico = $this->repository->findOrFail($servico->id)->toArray();
+//        MAil::send('mail.end', $servico, function($message) use ($servico) {
+//            $message->to($servico['cliente']['email'], 'To Website')
+//                ->subject('Finalizamos seu Serviço no Lavajato Tio San');
+//            $message->from('lavajatotiosan@naoresponda','Lava Jato Tio San');
+//        });
+//    }
 
     /**
      * Display the specified resource.

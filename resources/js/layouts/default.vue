@@ -25,13 +25,16 @@
             <v-spacer></v-spacer>
             <v-menu offset-y>
                 <template v-slot:activator="{ on }">
-                    <v-btn icon large v-on="on">
-                        <v-img size="2px" tile>
-                            <img height="50px"
-                                    src="https://scontent.fbsb3-1.fna.fbcdn.net/v/t1.0-1/p200x200/66618135_380208702640162_335163644163653632_n.jpg?_nc_cat=100&_nc_oc=AQnml6R-1DtnrY1OOx18Q3vel2_JFyo8YIqT0MnbugmQ8WbB83rqDmw8IXY0lHUsag3-OTRkUrr01JIYyKnvKFe5&_nc_ht=scontent.fbsb3-1.fna&oh=97a04cdb057034461b3cc1106f434643&oe=5DADBA44"
-                                    alt="tiosan"
-                            >
-                        </v-img>
+                    <v-btn icon x-large v-on="on">
+                         <v-avatar
+                        :tile="false"
+                        size="50px"
+                        color="black"
+                        class="text-center center"
+                    >
+                        <img src="https://scontent.fbsb3-1.fna.fbcdn.net/v/t1.0-1/p200x200/66618135_380208702640162_335163644163653632_n.jpg?_nc_cat=100&_nc_oc=AQnml6R-1DtnrY1OOx18Q3vel2_JFyo8YIqT0MnbugmQ8WbB83rqDmw8IXY0lHUsag3-OTRkUrr01JIYyKnvKFe5&_nc_ht=scontent.fbsb3-1.fna&oh=97a04cdb057034461b3cc1106f434643&oe=5DADBA44" alt="avatar">
+                    </v-avatar>
+                       
                     </v-btn>
                 </template>
                 <v-list>
