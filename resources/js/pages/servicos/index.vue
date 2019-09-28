@@ -330,8 +330,8 @@
                 axios
                     .get("/api/servico/enviaremailfimservico/" + this.formServico.id)
                     .then(res => {
+                        console.log(res.data)
                         this.servico = res.data;
-                        //console.log
                     })
                     .catch(error => {
                         console.log(error.response.data)

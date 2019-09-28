@@ -53,12 +53,10 @@ class ServicoRepository
             'tipo_pagamento' => isset($params['tipo_pagamento']) ? $params['tipo_pagamento'] : null,
             'categoria' => isset($params['categoria']) ? $params['categoria'] : null,
             'funcionario' => isset($params['funcionario']) ? $params['funcionario'] : null,
-            'image' => isset($params['image']) ? $params['image'] : null,
+//            'image' => isset($params['image']) ? $params['image'] : null,
             'id_tipo_servico' => $params['id_tipo_servico'],
             'id_veiculo' => $params['id_veiculo'],
             'id_cliente' => $params['id_cliente'],
-            'id_veiculo'
-
         ];
 
         return $formatted;
@@ -85,14 +83,11 @@ class ServicoRepository
 //            $nameFile = "{$name}.{$extension}";
 //            $data['image'] = $nameFile;
 //            $upload = $request->image->storeAs($this->path,$nameFile);
-//
 //            if(!$upload)
 //                return response()->json(['error' => 'Fail_Upload'],500);
-//
 //        }
 //        $product = $this->product->create($data);
 //        return response()->json($product,201);
 //    }
-
 }
 
