@@ -9,6 +9,7 @@ const TipoVeiculo = () => import('~/pages/tipo-veiculos').then(m => m.default ||
 const Veiculo = () => import('~/pages/veiculos').then(m => m.default || m)
 const TipoServico = () => import('~/pages/tipo-servicos').then(m => m.default || m)
 const Servico = () => import('~/pages/servicos').then(m => m.default || m)
+const Relatorio = () => import('~/pages/relatorio').then(m => m.default || m)
 const isAuth = (to, from, next) => {
     if (Cookies.get('token')) {
         next()
@@ -62,6 +63,12 @@ export default [
         path: '/veiculo',
         name: 'veiculo',
         component: Veiculo,
+        beforeEnter: isAuth
+    },
+    {
+        path: '/relatorio',
+        name: 'relatorio',
+        component: Relatorio,
         beforeEnter: isAuth
     },
 

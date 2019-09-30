@@ -31,7 +31,8 @@
                 { icon: 'airport_shuttle', text: 'Tipo veiculos', route:'/tipo-veiculo' },
                 { icon: 'directions_car', text: 'Veiculos', route:'/veiculo' },
                 { icon: 'business_center', text: 'Tipo Serviços', route:'/tipo-servico' },
-                { icon: 'local_car_wash', text: 'Serviços' ,route:'/servico' }
+                { icon: 'local_car_wash', text: 'Serviços' ,route:'/servico' },
+                { icon: 'print', text: 'Relatórios' ,route:'/relatorio' }
             ],
         }),
         props: {

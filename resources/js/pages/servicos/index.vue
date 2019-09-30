@@ -328,9 +328,9 @@
         methods: {
             enviarEmail() {
                 axios
-                    .get("/api/servico/enviaremailfimservico/" + this.formServico.id)
+                    .get("/api/servico/enviaremailfimservico/" + id)
                     .then(res => {
-                        console.log(res.data)
+                        console.log(res)
                         this.servico = res.data;
                     })
                     .catch(error => {

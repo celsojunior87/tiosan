@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::group(['middleware' => 'auth:api'], function () {
+Route::group(['middleware' => 'auth:api','cors'], function () {
 
 
     Route::resource('cliente', 'ClienteController');
@@ -23,6 +23,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('servico', 'ServicoController');
     Route::get('veiculo/buscar-cliente-por-placa/{placa}', 'VeiculoController@buscarClientePorPlaca');
     Route::get('servico/enviaremailfimservico/{id}', 'ServicoController@enviarEmailFimServico');
+    Route::get('relatorio', 'ServicoController@gerarRelatorio');
 
 
     Route::post('logout', 'Auth\LoginController@logout');

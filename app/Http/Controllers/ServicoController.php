@@ -7,6 +7,7 @@ use App\Models\Cliente;
 use App\Models\Servico;
 use App\Repositories\ClienteRepository;
 use App\Repositories\ServicoRepository;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Support\Facades\Mail;
 
 class ServicoController extends Controller
@@ -56,7 +57,7 @@ class ServicoController extends Controller
 
     public function enviarEmailFimServico($servico)
     {
-        dd('estou aqui');
+
         $servico = $this->repository->findOrFail($servico->id)->toArray();
         MAil::send('mail.end', $servico, function($message) use ($servico) {
             $message->to($servico['cliente']['email'], 'To Website')
@@ -100,5 +101,23 @@ class ServicoController extends Controller
         $servico = $this->repository->findOrFail($id);
         $this->repository->delete($servico, $id);
         return $this->success(['msg' => 'Excluído']);
+    }
+    public function gerarRelatorio()
+    {
+      $data = [
+        'title' => 'First PDF for medium',
+        'heading' => 'Hello from teste',
+        'content'  => 'Lorem ipsum is simplu dummy text of huhsuihs'
+      ];
+
+      dd($data);
+//      $pdf = PDF::loadView('pdf',$data);
+//      return $pdf->download('meu.pdf');
+
+
+//        $servico = Servico::all();
+//        $pdf = PDF::loadView('pdf', compact('servico'));
+////            ->setPaper('a4', 'landscape')
+//         return $pdf ->download('relatorio.pdf');
     }
 }
