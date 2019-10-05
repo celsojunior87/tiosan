@@ -7,9 +7,8 @@ use App\Models\Cliente;
 use App\Models\Servico;
 use App\Repositories\ClienteRepository;
 use App\Repositories\ServicoRepository;
-use Barryvdh\DomPDF\PDF;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Mail;
-
 class ServicoController extends Controller
 {
     protected $clienteRepository;
@@ -104,20 +103,14 @@ class ServicoController extends Controller
     }
     public function gerarRelatorio()
     {
-      $data = [
-        'title' => 'First PDF for medium',
-        'heading' => 'Hello from teste',
-        'content'  => 'Lorem ipsum is simplu dummy text of huhsuihs'
-      ];
+        $data = ['title' => 'Welcome to HDTuto.com'];
+        $pdf = PDF::loadView('pdf', $data);
+        return $pdf->download('hdtuto.pdf');
 
-      dd($data);
-//      $pdf = PDF::loadView('pdf',$data);
-//      return $pdf->download('meu.pdf');
-
-
-//        $servico = Servico::all();
-//        $pdf = PDF::loadView('pdf', compact('servico'));
-////            ->setPaper('a4', 'landscape')
-//         return $pdf ->download('relatorio.pdf');
+//        $servicos = Servico::all();
+//
+//        return PDF::loadView('pdf', compact('servicos'))
+//            // Se quiser que fique no formato a4 retrato: ->setPaper('a4', 'landscape')
+//            ->download('teste.pdf');
     }
 }

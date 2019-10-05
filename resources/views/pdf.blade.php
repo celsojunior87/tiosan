@@ -1,13 +1,29 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-    <title>{{ $title }}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Título Opcional</title>
+
+    <!--Custon CSS (está em /public/assets/site/css/certificate.css)-->
+    <link rel="stylesheet" href="{{ url('assets/site/css/certificate.css') }}">
 </head>
 <body>
-<h1>{{ $heading}}</h1>
-<div>
-    <p>{{$content}}</p>
-</div>
-</body>
+
+
+<h1>{{ $title }}</h1>
+
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+
+    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+
+    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+
+    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+
+    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+
 </body>
 </html>

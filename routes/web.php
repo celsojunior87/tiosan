@@ -12,3 +12,5 @@
 */
 
 Route::get('{path}', 'IndexController@vue')->where('path', '(.*)');
+
+

@@ -1,6 +1,6 @@
 <template>
   <div class="text-xs-center">
-    <v-btn round color="primary" @click="gerarPdf()" dark>Rounded Button</v-btn>
+    <v-btn round color="success" @click="gerarPdf()" dark>Gerar Relatório</v-btn>
   </div>
 </template>
 
@@ -23,7 +23,6 @@ export default {
       axios
         .get("/api/relatorio")
         .then(res => {
-          console.log(res.data)
         })
         .catch(() => {});
 

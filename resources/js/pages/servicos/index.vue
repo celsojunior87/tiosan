@@ -328,7 +328,7 @@
         methods: {
             enviarEmail() {
                 axios
-                    .get("/api/servico/enviaremailfimservico/" + id)
+                    .get("/api/servico/enviaremailfimservico/")
                     .then(res => {
                         console.log(res)
                         this.servico = res.data;
