@@ -37,7 +37,7 @@ class ClienteController extends Controller
     public function store(ClienteRequest $request)
     {
         $clientes = $this->cliente->create($request->all());
-        return response()->json($clientes, 201);
+        return response()->json($clientes, 200);
     }
 
     /**
