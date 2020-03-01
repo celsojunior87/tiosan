@@ -32,9 +32,9 @@
                         color="black"
                         class="text-center center"
                     >
-                        <img src="https://scontent.fbsb3-1.fna.fbcdn.net/v/t1.0-1/p200x200/66618135_380208702640162_335163644163653632_n.jpg?_nc_cat=100&_nc_oc=AQnml6R-1DtnrY1OOx18Q3vel2_JFyo8YIqT0MnbugmQ8WbB83rqDmw8IXY0lHUsag3-OTRkUrr01JIYyKnvKFe5&_nc_ht=scontent.fbsb3-1.fna&oh=97a04cdb057034461b3cc1106f434643&oe=5DADBA44" alt="avatar">
+                        <img src="https://scontent.fbsb3-1.fna.fbcdn.net/v/t1.0-9/66618135_380208702640162_335163644163653632_n.jpg?_nc_cat=100&_nc_sid=85a577&_nc_ohc=Sv28ZoU1SB8AX_qhusK&_nc_ht=scontent.fbsb3-1.fna&oh=a89a46472a55d4bd08e7cb500f8d382c&oe=5EBE0BCC" alt="avatar">
                     </v-avatar>
-                       
+
                     </v-btn>
                 </template>
                 <v-list>

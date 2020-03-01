@@ -103,6 +103,7 @@ class ServicoController extends Controller
     }
     public function gerarRelatorio()
     {
+
         $data = ['title' => 'Welcome to HDTuto.com'];
         $pdf = PDF::loadView('pdf', $data);
         return $pdf->download('hdtuto.pdf');
